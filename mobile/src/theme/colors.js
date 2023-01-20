@@ -1,4 +1,4 @@
-export const colors = {
+module.exports = {
     brand: {
         purple: '#9B5EED',
         green: '#01C38D',
