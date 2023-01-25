@@ -1,4 +1,12 @@
+import { useToast } from '@/contexts/ToastContext';
+import useCreateHabits from '@/hooks/habits/useCreateHabits';
+import { useState } from 'react';
+
 export default function useCreateHabit() {
+  const { mutateAsync: createNewHabit, isLoading } = useCreateHabits();
+  const [checkedWeekDays, setCheckedWeekDays] = useState<number[]>([]);
+  const { toast } = useToast();
+
   const weekDays = [
     'Domingo',
     'Segunda-feira',
@@ -9,11 +17,29 @@ export default function useCreateHabit() {
     'Sábado',
   ];
 
-  const onSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+  function handleWeekDays(dayNumber: number) {
+    if (checkedWeekDays.includes(dayNumber)) {
+      const weekDaysWithoutDayNumber = checkedWeekDays.filter((item) => item !== dayNumber);
+      setCheckedWeekDays(weekDaysWithoutDayNumber);
+    } else {
+      setCheckedWeekDays([...checkedWeekDays, dayNumber]);
+    }
+  }
+
+  const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const monday = (document.getElementById('Domingo-checkbox') as HTMLButtonElement).dataset.state;
-    console.log(monday);
+    const habitTitle = (document.getElementById('habitTitle') as HTMLInputElement)?.value;
+    await createNewHabit(
+      {
+        title: habitTitle,
+        weekDays: checkedWeekDays,
+      },
+      {
+        onSuccess: (res) => toast({ message: res.data, type: 'success', withClose: true }),
+        onError: () => toast({ message: 'Erro ao criar hábito', type: 'error', withClose: false }),
+      },
+    );
   };
 
-  return { weekDays, onSubmit };
+  return { weekDays, checkedWeekDays, isLoading, onSubmit, handleWeekDays };
 }

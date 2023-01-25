@@ -22,3 +22,36 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+body::-webkit-scrollbar,
+div::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
+  background-color: #9b5eed; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 3px solid #9b5eed; /* creates padding around scroll thumb */
+}
+
+.spinner-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  animation: spinner 1s linear infinite;
+}

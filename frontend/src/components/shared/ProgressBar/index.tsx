@@ -10,10 +10,10 @@ export const ProgressBar = ({ percentage }: Props) => {
       <div
         role="progressbar"
         aria-label="Progresso de hábitos completados nesse dia"
-        aria-valuenow={percentage / 100}
+        aria-valuenow={percentage * 100}
         className="bg-brand-purple w-3/4 h-full rounded-xl"
         style={{
-          width: `${percentage}%`,
+          width: `${percentage * 100}%`,
         }}
       />
     </div>

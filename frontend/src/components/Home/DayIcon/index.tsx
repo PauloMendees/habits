@@ -12,12 +12,10 @@ interface Props {
 
 export function DayIcon({ amount, completed, date }: Props) {
   const percentage = Math.round((completed / amount) * 100);
-
   return (
     <Popover.Root>
       <Popover.Trigger
-        className={clsx('w-10 h-10 rounded-lg border-2', {
-          'bg-zinc-900 border-zinc-800': percentage === 0,
+        className={clsx('w-10 h-10 rounded-lg border-2 border-zinc-800 bg-zinc-900', {
           'bg-violet-900 border-violet-800': percentage > 0 && percentage < 20,
           'bg-violet-800 border-violet-700': percentage >= 20 && percentage < 40,
           'bg-violet-700 border-violet-600': percentage >= 40 && percentage < 60,

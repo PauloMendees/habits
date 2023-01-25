@@ -1,12 +1,12 @@
-import { Plus } from '@/assets/icons/plus';
 import colors from '@/theme/colors';
 import Image from 'next/image';
 import React from 'react';
 import Logo from '../../../assets/images/logo.svg';
-import { FakeButton } from '../../shared/button';
+import { FakeButton } from '../../shared/Button';
 import * as Dialog from '@radix-ui/react-dialog';
 import { CreateHabitModalContent } from '../CreateHabitModalContent';
-import { Close } from '@/assets/icons/close';
+import { Plus } from '@/assets/icons/Plus';
+import { Close } from '@/assets/icons/Close';
 
 export function Header() {
   return (

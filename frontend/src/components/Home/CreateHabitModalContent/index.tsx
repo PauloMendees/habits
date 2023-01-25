@@ -1,13 +1,13 @@
-import { Check } from '@/assets/icons/check';
-import { Button } from '@/components/shared/button';
+import { Check } from '@/assets/icons/Check';
+import { Button } from '@/components/shared/Button';
 import { Checkbox } from '@/components/shared/Checkbox';
-import { Input } from '@/components/shared/input';
+import { Input } from '@/components/shared/Input';
 import colors from '@/theme/colors';
 import React from 'react';
 import useCreateHabit from './hooks/useCreateHabit';
 
 export const CreateHabitModalContent = () => {
-  const { weekDays, onSubmit } = useCreateHabit();
+  const { weekDays, onSubmit, handleWeekDays, checkedWeekDays, isLoading } = useCreateHabit();
 
   return (
     <form
@@ -16,7 +16,7 @@ export const CreateHabitModalContent = () => {
     >
       <Input
         label="Qual seu comprometimento?"
-        id="title"
+        id="habitTitle"
         placeholder="Exercícios, dormir bem, etc..."
         isFullWidth
         autoFocus
@@ -26,13 +26,16 @@ export const CreateHabitModalContent = () => {
       <label>Qual a recorrência?</label>
       <div className="w-full flex flex-col gap-2">
         {weekDays.map((day, i) => (
-          <Checkbox id={`${day}-checkbox`} label={day} />
+          <Checkbox id={`${day}-checkbox`} label={day} checked={checkedWeekDays.includes(i)} onCheckedChange={() => {
+            handleWeekDays(i)
+          }} />
         ))}
       </div>
       <Button
         type="submit"
         isFullWidth
         style={{ backgroundColor: colors.brand.green, marginTop: 8 }}
+        isLoading={isLoading}
       >
         <Check />
         <span>Confirmar</span>

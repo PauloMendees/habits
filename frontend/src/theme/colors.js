@@ -16,4 +16,12 @@ module.exports = {
   zinc: {
     900: '#18181B',
   },
+  alerts: {
+    orange: '#F26E23',
+    yellow: '#F1AD47',
+    green: '#05C8A5',
+    blue: '#288BE2',
+    purple: '#8A33CF',
+    red: '#E52856',
+  },
 };

@@ -1,11 +1,14 @@
 import React from 'react';
 import { DayIcon } from '../DayIcon';
 import useSummary from './hooks/useSummary';
+import { LoadingSummary } from './LoadingSummary';
 
 export function Summary() {
-  const { days, summaryDates, amountOfDaysToFill } = useSummary();
+  const { days, summaryDates, amountOfDaysToFill, summary, isLoading } = useSummary();
 
-  return (
+  return isLoading ? (
+    <LoadingSummary />
+  ) : (
     <div className="w-full max-w-[1000px] flex">
       <div className="grid grid-rows-7 grid-flow-row gap-2 text-zinc-400 font-bold">
         {days.map((day, i) => (
@@ -20,8 +23,10 @@ export function Summary() {
             <DayIcon
               date={date.toISOString()}
               key={date.toString()}
-              amount={5}
-              completed={Math.round(Math.random() * 5)}
+              amount={summary?.data.find((item) => item.date === date.toISOString())?.amount || 0}
+              completed={
+                summary?.data.find((item) => item.date === date.toISOString())?.completed || 0
+              }
             />
           ))}
           {amountOfDaysToFill > 0 &&
