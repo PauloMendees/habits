@@ -3,28 +3,40 @@ import { HabitDay } from '../HabitDay';
 import useHabitDay from '../HabitDay/hooks/useHabitDay';
 import useSummary from './hooks/useSummary';
 import { useNavigation } from '@react-navigation/native';
+import useGetSummary from '../../../hooks/habits/useGetSummary';
+import { useEffect } from 'react';
 
 export const Summary = () => {
   const { days, summaryDates, amountOfDaysToFill } = useSummary();
   const { DAY_SIZE } = useHabitDay();
   const { navigate } = useNavigation();
+  const { data, isLoading } = useGetSummary();
+
+  useEffect(() => {
+    console.log(data);
+  }, [data, isLoading]);
 
   return (
     <View className="w-full my-6 flex-col">
-      <View className="flex-row">
-        {days.map((day, index) => (
-          <Text
-            key={`${day}+${index}`}
-            className="text-zinc-400 text-xl font-bold text-center mx-1"
-            style={{
-              width: DAY_SIZE,
-              height: DAY_SIZE,
-            }}
-          >
-            {day}
-          </Text>
-        ))}
-      </View>
+      {isLoading ? (
+        <View className="flex-row">
+          {days.map((day, index) => (
+            <Text
+              key={`${day}+${index}`}
+              className="text-zinc-400 text-xl font-bold text-center mx-1"
+              style={{
+                width: DAY_SIZE,
+                height: DAY_SIZE,
+              }}
+            >
+              {day}
+            </Text>
+          ))}
+        </View>
+      ) : (
+        <></>
+      )}
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

@@ -8,6 +8,7 @@ import {
 } from '@expo-google-fonts/inter';
 import { Loading } from './src/components/shared/Loading';
 import { Routes } from './src/routes';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,10 +20,18 @@ export default function App() {
 
   if (!fontsLoaded) return <Loading />;
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Routes />
       <StatusBar translucent barStyle="light-content" backgroundColor="transparent" />
-    </>
+    </QueryClientProvider>
   );
 }

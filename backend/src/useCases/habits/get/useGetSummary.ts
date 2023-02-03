@@ -1,13 +1,22 @@
 import dayjs from "dayjs";
 import { prisma } from "../../../lib/prisma";
+import { getIdByToken } from "../../../providers/jwt";
 
-export async function useGetSummary() {
+export async function useGetSummary(authToken: string) {
+    const userId = getIdByToken(authToken)
+
     const allDays = await prisma.day.findMany({
+        where: {
+            user_id: userId
+        },
         include: {
             completedHabits: true
         }
     })
     const allHabits = await prisma.habit.findMany({
+        where: {
+            user_id: userId
+        },
         include: {
             weekDays: true
         }

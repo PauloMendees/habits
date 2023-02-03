@@ -14,12 +14,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                 String               @id @default(uuid())
+  email              String               @unique
+  nickname           String
+  password           String
+  created_at         DateTime             @default(now())
+  Habit              Habit[]
+  Day                Day[]
+  HabitWeekDay       HabitWeekDay[]
+  CompletedDayHabits CompletedDayHabits[]
+
+  @@map("users")
+}
+
 model Habit {
   id              String               @id @default(uuid())
   title           String
   created_at      DateTime
+  user_id         String
   completedHabits CompletedDayHabits[]
   weekDays        HabitWeekDay[]
+
+  User User @relation(fields: [user_id], references: [id])
 
   @@map("habits")
 }
@@ -28,6 +45,8 @@ model Day {
   id              String               @id @default(uuid())
   date            DateTime
   completedHabits CompletedDayHabits[]
+  user_id         String
+  User            User                 @relation(fields: [user_id], references: [id])
 
   @@unique([date])
   @@map("days")
@@ -37,8 +56,9 @@ model HabitWeekDay {
   id       String @id @default(uuid())
   week_day Int
   habit_id String
-
-  habit Habit @relation(fields: [habit_id], references: [id])
+  user_id  String
+  User     User   @relation(fields: [user_id], references: [id])
+  habit    Habit  @relation(fields: [habit_id], references: [id])
 
   @@unique([habit_id, week_day])
   @@map("habit_week_day")
@@ -49,9 +69,10 @@ model CompletedDayHabits {
 
   day_id   String
   habit_id String
-
-  day   Day   @relation(fields: [day_id], references: [id])
-  habit Habit @relation(fields: [habit_id], references: [id])
+  user_id  String
+  User     User   @relation(fields: [user_id], references: [id])
+  day      Day    @relation(fields: [day_id], references: [id])
+  habit    Habit  @relation(fields: [habit_id], references: [id])
 
   @@unique([day_id, habit_id])
   @@map("completed_day_habits")

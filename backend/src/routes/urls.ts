@@ -5,5 +5,9 @@ export const urls = {
         get: '/api/habits',
         habitToggle: '/api/habits/:id/toggle',
         summary: '/api/summary'
+    },
+    user: {
+        register: '/api/register',
+        login: '/api/login'
     }
 }

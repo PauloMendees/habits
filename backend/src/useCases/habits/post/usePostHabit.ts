@@ -1,13 +1,17 @@
 import dayjs from "dayjs"
 import { prisma } from "../../../lib/prisma"
+import { getIdByToken } from "../../../providers/jwt"
 
 interface Params {
   title: string,
   weekDays: number[]
+  authToken: string
 }
 
-export async function usePostHabit({ title, weekDays }: Params) {
+export async function usePostHabit({ title, weekDays, authToken }: Params) {
   const today = dayjs().startOf('day').toDate()
+
+  const userId = getIdByToken(authToken)
 
   await prisma.$connect()
   await prisma.habit.create({
@@ -17,10 +21,12 @@ export async function usePostHabit({ title, weekDays }: Params) {
       weekDays: {
         create: weekDays.map(day => {
           return {
-            week_day: day
+            week_day: day,
+            user_id: userId,
           }
         })
-      }
+      },
+      user_id: userId
     }
   })
   await prisma.$disconnect()
