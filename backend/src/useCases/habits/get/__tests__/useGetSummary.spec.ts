@@ -26,7 +26,7 @@ describe('Testing useGetSummary useCase', () => {
         id: fakeID,
         date: fakeDate,
         completed: 2,
-        amount: 1,
+        amount: 0,
       },
     ];
 

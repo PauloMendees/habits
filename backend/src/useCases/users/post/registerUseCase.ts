@@ -21,7 +21,7 @@ export async function registerUseCase({
     throw new Error('Senha não cumpre os requisitos.');
   const hashedPassword = await createHash(password);
   await prisma.$connect();
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       email,
       nickname: nickName,
@@ -29,4 +29,6 @@ export async function registerUseCase({
     },
   });
   await prisma.$disconnect();
+
+  return user;
 }

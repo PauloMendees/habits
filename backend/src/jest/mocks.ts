@@ -1,4 +1,11 @@
-import { CompletedDayHabits, Day, Habit, HabitWeekDay } from '@prisma/client';
+import {
+  CompletedDayHabits,
+  Day,
+  Habit,
+  HabitWeekDay,
+  User,
+} from '@prisma/client';
+import { createHash } from '../providers/cryptography';
 
 export const fakeJWT =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWQiOjE1MTYyMzkwMjJ9.XVx3jbaPQvulCykqG6IS6-4khpUlGC3SqBKXVRAodFg';
